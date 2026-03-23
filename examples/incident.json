@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/checkout",
+    "body": "{\"cart_id\":\"cart_88\"}",
+    "header": {
+      "x-request-id": "req-900"
+    }
+  },
+  "expected_response": {
+    "status": 200,
+    "body": "{\"ok\":true}"
+  },
+  "actual_response": {
+    "status": 500,
+    "body": "{\"error\":\"postgres timeout\"}"
+  },
+  "outgoing_http": [
+    {
+      "service": "inventory",
+      "status": 200
+    }
+  ],
+  "postgres": [
+    {
+      "query": "select reserve_inventory($1)",
+      "result": "timeout"
+    }
+  ],
+  "metadata": {
+    "service": "checkout-api"
+  }
+}
